@@ -13,7 +13,7 @@ using Adam.Tools.LogHandler;
 
 namespace Adam.Core.DatabaseManager
 {
-	public class Upgrader : UpgradeScriptBase
+	public class Upgrader663 : UpgradeScriptBase
 	{
 		private readonly Guid _assetStudioWidgetsId = new Guid("C5DB4DFD-CCDD-436E-82F3-CA91A456C428");
 		private readonly Guid _configStudioWidgetsId = new Guid("8ADAC44E-FC07-4A98-B6A5-DBEE153F7F5F");

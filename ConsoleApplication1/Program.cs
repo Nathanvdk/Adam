@@ -26,13 +26,13 @@ namespace ConsoleApplication1
 				ExecuteSqlFile(sqlConnection, @"C:\workspaces\TFSServer\Adam ASF\Development\v5.x\Database\660.sql");
 				ExecuteSqlFile(sqlConnection, @"C:\workspaces\TFSServer\Adam ASF\Development\v5.x\Database\662.sql");
 
-				//var upgrader663 = new Upgrader663();
-				//upgrader663.Update(sqlConnection);
+				var upgrader663 = new Upgrader663();
+				upgrader663.Update(sqlConnection);
 
-				//ExecuteSqlFile(sqlConnection, @"C:\workspaces\TFSServer\Adam ASF\Development\v5.x\Database\664.sql");
+				ExecuteSqlFile(sqlConnection, @"C:\workspaces\TFSServer\Adam ASF\Development\v5.x\Database\664.sql");
 
-				//var upgrader665 = new Upgrader665();
-				//upgrader665.Update(sqlConnection);
+				var upgrader665 = new Upgrader665();
+				upgrader665.Update(sqlConnection);
 
 				var upgrader = new Upgrader();
 				upgrader.Update(sqlConnection);
