@@ -1,0 +1,9 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>   
+	<FilesToCopyNet40 Include="$(MSBuildThisFileDirectory)\..\lib\net45\Xceed.Compression.v5.3.dll" />
+	<FilesToCopyNet40 Include="$(MSBuildThisFileDirectory)\..\lib\net45\Xceed.Compression.Formats.v5.3.dll" />
+  </ItemGroup>
+  <Target Name="AfterBuild">    
+	<Copy SourceFiles="@(FilesToCopyNet40)" DestinationFiles="@(FilesToCopyNet40->'$(TargetDir)%(RecursiveDir)%(Filename)%(Extension)')" ContinueOnError="false" />
+  </Target>
+</Project>

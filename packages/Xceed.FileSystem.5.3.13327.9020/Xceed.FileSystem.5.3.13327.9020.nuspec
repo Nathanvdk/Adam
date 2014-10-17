@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Xceed.FileSystem</id>
+    <version>5.3.13327.9020</version>
+    <authors>AdamSoftware.net</authors>
+    <owners>Xceed</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Xceed FileSystem</description>
+    <copyright>Copyright 2014</copyright>
+  </metadata>
+</package>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Adam.Tools</id>
+    <version>5.2</version>
+    <title>ADAM Tools</title>
+    <authors>ADAM Software NV</authors>
+    <owners>ADAM Software NV</owners>
+    <projectUrl>http://www.adamsoftware.net</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides helper and utility classes for simplifying common tasks.</description>
+    <copyright>Copyright © 2014 ADAM Software NV</copyright>
+  </metadata>
+</package>
