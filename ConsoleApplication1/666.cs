@@ -58,7 +58,9 @@ namespace Adam.Core.DatabaseManager
 				{
 					//Parse the setting from the property facetProviderSettingName.
 					var facetProviderSettingName = ParseFacetProviderSettingName(registeredSpace);
-					var facets = _settingRepository.SelectSettingsByName(facetProviderSettingName).First();
+					var facets = _settingRepository.SelectSettingsByName(facetProviderSettingName).FirstOrDefault();
+					if(facets == null) continue;
+
 					var valueToUse = facets.Value != facets.DefaultValue ? facets.Value : facets.DefaultValue;
 
 					//Move all the facet types to a new setting called .assetStudioRegisteredFacets
@@ -98,9 +100,7 @@ namespace Adam.Core.DatabaseManager
 					registeredSpace.SetAttributeValue("facets", string.Join(", ", allRegisteredFacetNames.ToArray()));
 
 					registeredSpace.AdamAttribute("facetProviderSettingName").Remove();
-					registeredSpace.AdamAttribute("widgetLocation").Remove();
-					registeredSpace.AdamAttribute("widgetSize").Remove();
-
+				
 					//reset renamed facets.
 					_renamedFacets = new List<RenamedFacet>();
 				}

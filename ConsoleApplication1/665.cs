@@ -66,7 +66,7 @@ namespace Adam.Core.DatabaseManager
 			allSpaces.AddRange(userSpaces);
 			allSpaces.AddRange(userGroupSpace);
 
-			allSpaces = FilterDoubles(allSpaces);
+			allSpaces = FilterDoubles(allSpaces, false);
 		
 			//add all the spaces to a new setting called registeredSpaces setting.
 			var registeredSpacesSetting = _settingRepository.SelectSettingById(_assetStudioRegisteredSpaces);
@@ -176,7 +176,8 @@ namespace Adam.Core.DatabaseManager
 		private string AddSpacesToRegisteredSpaces(IEnumerable<XElement> allSpaces, string settingValue)
 		{
 			var document = XDocument.Parse(settingValue);
-
+			var newSettings = new List<XElement>();
+			
 			foreach (XElement allSpace in allSpaces)
 			{
 				var spaceType = allSpace.AdamAttribute("type").Value.ToLowerInvariant().Trim().Replace(" ", "");
@@ -190,6 +191,8 @@ namespace Adam.Core.DatabaseManager
 								a.Name.LocalName.ToString(CultureInfo.InvariantCulture).ToLowerInvariant() == "iswidgetdescriptionvisible" || 
 								a.Name.LocalName.ToString(CultureInfo.InvariantCulture).ToLowerInvariant() == "iswidgettitlevisible" ||
 								a.Name.LocalName.ToString(CultureInfo.InvariantCulture).ToLowerInvariant() == "widgetcssclass" ||
+								a.Name.LocalName.ToString(CultureInfo.InvariantCulture).ToLowerInvariant() == "widgetlocation" ||
+								a.Name.LocalName.ToString(CultureInfo.InvariantCulture).ToLowerInvariant() == "widgetsize" ||
 								a.Name.LocalName.ToString(CultureInfo.InvariantCulture).ToLowerInvariant() == "widgetstyle")
 						.Remove();
 
@@ -208,7 +211,7 @@ namespace Adam.Core.DatabaseManager
 					}
 
 
-					document.Root.Add(newSettingElement);
+					newSettings.Add(newSettingElement);
 				}
 				else
 				{
@@ -216,6 +219,13 @@ namespace Adam.Core.DatabaseManager
 					document.Root.Add(comment);
 				}
 
+			}
+
+			newSettings = FilterDoubles(newSettings, true);
+
+			foreach (var newSetting in newSettings)
+			{
+				document.Root.Add(newSetting);
 			}
 
 			return document.ToString(SaveOptions.None);
@@ -252,7 +262,7 @@ namespace Adam.Core.DatabaseManager
 			return spaces;
 		}
 
-		private List<XElement> FilterDoubles(IReadOnlyCollection<XElement> allSpaces)
+		private List<XElement> FilterDoubles(IReadOnlyCollection<XElement> allSpaces, bool makeNameUnique)
 		{
 			//Filter out the doubles. I do this through string comparison, because this is to most easy to implement.
 			var stringifiedList = new List<String>(allSpaces.Count);
@@ -268,12 +278,16 @@ namespace Adam.Core.DatabaseManager
 				var xmlString = stringifiedList[index];
 				var element = XElement.Parse(xmlString);
 
-				var name = element.Attribute(XName.Get("name")).Value;
-				if (names.Contains(name))
+				if (makeNameUnique)
 				{
-					element.SetAttributeValue("name", string.Format("{0}_{1}", name, index));
+					var name = element.Attribute(XName.Get("name")).Value;
+					if (names.Contains(name))
+					{
+						element.SetAttributeValue("name", string.Format("{0}_{1}", name, index));
+					}
+					names.Add(name);
 				}
-				names.Add(name);
+				
 				nodeList.Add(element);
 			}
 
